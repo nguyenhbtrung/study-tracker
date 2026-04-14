@@ -26,36 +26,4 @@
  * ```
  */
 
-import './index.css';
-
-function format(ms: number): string {
-  const sec = Math.floor(ms / 1000);
-  const h = Math.floor(sec / 3600);
-  const m = Math.floor((sec % 3600) / 60);
-  const s = sec % 60;
-
-  return `${h}h ${m}m ${s}s`;
-}
-
-async function update() {
-  const stats = await (window as any).api.getStats();
-
-  document.getElementById('today')!.innerText = format(stats.today);
-  document.getElementById('total')!.innerText = format(stats.total);
-}
-
-setInterval(update, 1000);
-update();
-
-/* WINDOW CONTROLS */
-document.getElementById('minimize')?.addEventListener('click', () => {
-  (window as any).api.minimize();
-});
-
-document.getElementById('maximize')?.addEventListener('click', () => {
-  (window as any).api.maximize();
-});
-
-document.getElementById('close')?.addEventListener('click', () => {
-  (window as any).api.close();
-});
+import './renderer/main';
