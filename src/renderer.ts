@@ -47,6 +47,15 @@ async function update() {
 setInterval(update, 1000);
 update();
 
-console.log(
-  '👋 This message is being logged by "renderer.js", included via webpack',
-);
+/* WINDOW CONTROLS */
+document.getElementById('minimize')?.addEventListener('click', () => {
+  (window as any).api.minimize();
+});
+
+document.getElementById('maximize')?.addEventListener('click', () => {
+  (window as any).api.maximize();
+});
+
+document.getElementById('close')?.addEventListener('click', () => {
+  (window as any).api.close();
+});

@@ -1,22 +1,46 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Study Tracker</title>
-  </head>
-  <body>
-    <div class="container">
-      <h1>📚 Study Tracker</h1>
+<body>
+  <!--  TITLE BAR -->
+  <div class="titlebar">
+    <div class="drag-region">
+      <span>📚 Study Tracker</span>
+    </div>
 
-      <div class="card">
-        <p>Today</p>
-        <h2 id="today">0h 0m 0s</h2>
-      </div>
+    <div class="window-controls">
+      <button id="minimize">—</button>
+      <button id="maximize">⬜</button>
+      <button id="close">✕</button>
+    </div>
+  </div>
 
-      <div class="card">
-        <p>Total</p>
-        <h2 id="total">0h 0m 0s</h2>
+  <!--  APP -->
+  <div class="app">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="logo">ST</div>
+
+      <div class="nav-item active">Dashboard</div>
+      <div class="nav-item">Tasks</div>
+      <div class="nav-item">Statistics</div>
+      <div class="nav-item">Settings</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <div class="content-inner">
+        <h1>Dashboard</h1>
+
+        <div class="cards">
+          <div class="card">
+            <p>Today</p>
+            <h2 id="today">0h 0m 0s</h2>
+          </div>
+
+          <div class="card">
+            <p>Total</p>
+            <h2 id="total">0h 0m 0s</h2>
+          </div>
+        </div>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</body>

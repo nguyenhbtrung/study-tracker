@@ -7,6 +7,9 @@ declare global {
         today: number;
         total: number;
       }>;
+      minimize: () => void;
+      maximize: () => void;
+      close: () => void;
     };
   }
 }
