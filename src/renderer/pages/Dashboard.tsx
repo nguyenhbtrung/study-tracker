@@ -21,20 +21,22 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="content-inner">
-      <h1>Dashboard</h1>
+    <div className="max-w-5xl mx-auto">
+      <h1 className="text-xl font-semibold mb-6">Dashboard</h1>
 
-      <div className="cards">
-        <div className="card">
-          <p>Today</p>
-          <h2>{format(stats.today)}</h2>
-        </div>
-
-        <div className="card">
-          <p>Total</p>
-          <h2>{format(stats.total)}</h2>
-        </div>
+      <div className="grid grid-cols-2 gap-6">
+        <Card title="Today" value={format(stats.today)} />
+        <Card title="Total" value={format(stats.total)} />
       </div>
+    </div>
+  );
+}
+
+function Card({ title, value }: any) {
+  return (
+    <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:translate-y-[-4px] transition">
+      <p className="text-sm opacity-70">{title}</p>
+      <h2 className="text-2xl font-semibold mt-2">{value}</h2>
     </div>
   );
 }
