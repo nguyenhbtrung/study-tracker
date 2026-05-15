@@ -29,6 +29,7 @@
     "@electron-forge/plugin-webpack": "^7.11.1",
     "@electron/fuses": "^1.8.0",
     "@tailwindcss/postcss": "^4.2.2",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
@@ -51,6 +52,7 @@
     "typescript": "^6.0.2"
   },
   "dependencies": {
+    "better-sqlite3": "^12.9.0",
     "electron-squirrel-startup": "^1.0.1",
     "lucide-react": "^1.8.0",
     "react": "^19.2.5",
