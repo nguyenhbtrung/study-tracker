@@ -1,1 +1,1 @@
-import './AppRoot';
+import './App';

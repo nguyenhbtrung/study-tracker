@@ -8,7 +8,7 @@ function format(ms: number) {
   return `${h}h ${m}m ${s}s`;
 }
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const stats = useTracker();
 
   return (

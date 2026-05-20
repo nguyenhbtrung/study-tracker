@@ -1,7 +1,8 @@
+import { Outlet } from 'react-router-dom';
 import { Sidebar } from '../sidebar';
 import { TitleBar } from '../title-bar';
 
-export default function Layout({ children }: any) {
+export default function Layout() {
   return (
     <div className="h-screen flex flex-col bg-[#0f0f1a] text-white overflow-hidden">
       <TitleBar />
@@ -9,7 +10,9 @@ export default function Layout({ children }: any) {
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
 
-        <div className="flex-1 overflow-y-auto p-6">{children}</div>
+        <div className="flex-1 overflow-y-auto p-6">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
