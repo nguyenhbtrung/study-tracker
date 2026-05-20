@@ -1,9 +1,9 @@
 import { ipcMain } from 'electron';
 import { TrackerService } from './tracker.service';
+import { Container } from '@ntrg/simple-di';
 
-export const trackerService = new TrackerService();
-
-export function registerTrackerIPC() {
+export function registerTrackerIPC(container: Container) {
+  const trackerService = container.resolve(TrackerService);
   ipcMain.handle('tracker:get-stats', () => {
     return trackerService.getStats();
   });

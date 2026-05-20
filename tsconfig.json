@@ -11,6 +11,11 @@
     "baseUrl": ".",
     "outDir": "dist",
     "rootDir": "src",
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    // "useDefineForClassFields": false,
+
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react-jsx",

@@ -1,11 +1,20 @@
 import { app } from 'electron';
 import { createMainWindow } from '../processes/main-window/window';
 import { registerIpcHandlers } from './ipc-registry';
-import { trackerService } from '../features/tracker/tracker.handler';
+import { Container } from '@ntrg/simple-di';
+import { createContainer } from './container';
+import { TrackerService } from '../features/tracker/tracker.service';
+
+let container: Container;
+let trackerService: TrackerService;
 
 app.whenReady().then(() => {
   createMainWindow();
-  registerIpcHandlers();
+
+  container = createContainer();
+  registerIpcHandlers(container);
+
+  trackerService = container.resolve(TrackerService);
 
   trackerService.startTracking();
 });

@@ -1,9 +1,11 @@
+import { Injectable } from '@ntrg/simple-di';
 import { SessionRepository } from '../../entities/session/session.repository';
 
 let startTime: number | null = null;
 
+@Injectable()
 export class TrackerService {
-  private repo = new SessionRepository();
+  constructor(private readonly sessionRepo: SessionRepository) {}
 
   start() {
     if (!startTime) startTime = Date.now();
@@ -15,7 +17,7 @@ export class TrackerService {
     const end = Date.now();
     const duration = end - startTime;
 
-    this.repo.create({
+    this.sessionRepo.create({
       start_time: startTime,
       end_time: end,
       duration,
@@ -28,8 +30,8 @@ export class TrackerService {
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
 
-    const total = this.repo.getTotal();
-    const today = this.repo.getToday(startOfDay.getTime());
+    const total = this.sessionRepo.getTotal();
+    const today = this.sessionRepo.getToday(startOfDay.getTime());
     const current = startTime ? Date.now() - startTime : 0;
 
     return {

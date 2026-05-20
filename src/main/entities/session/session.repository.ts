@@ -1,9 +1,11 @@
+import { Injectable } from '@ntrg/simple-di';
 import { db } from '../../shared/db/client';
 import { Session } from './session.model';
 
 type TotalRow = { total: number | null };
 type TodayRow = { today: number | null };
 
+@Injectable()
 export class SessionRepository {
   create(session: Session) {
     return db
