@@ -1,6 +1,7 @@
 import { createHashRouter } from 'react-router-dom';
 import { DashboardPage } from './dashboard';
 import { Layout } from '../widgets/layout';
+import { StatisticsPage } from './statistics';
 
 export const router = createHashRouter([
   {
@@ -17,7 +18,7 @@ export const router = createHashRouter([
       },
       {
         path: 'statistics',
-        element: <div />,
+        element: <StatisticsPage />,
       },
       {
         path: 'settings',

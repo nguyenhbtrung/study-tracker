@@ -1,4 +1,4 @@
-import { useTracker } from '../../features/tracker/use-tracker';
+import { useTracker } from '../../features/tracker';
 
 function format(ms: number) {
   const sec = Math.floor(ms / 1000);
@@ -8,7 +8,7 @@ function format(ms: number) {
   return `${h}h ${m}m ${s}s`;
 }
 
-export default function DashboardPage() {
+export function DashboardPage() {
   const stats = useTracker();
 
   return (

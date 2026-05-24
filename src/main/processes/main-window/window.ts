@@ -9,8 +9,8 @@ export function createMainWindow() {
   win = new BrowserWindow({
     width: 1200,
     height: 800,
-    frame: false,
-    titleBarStyle: 'hidden',
+    // frame: false,
+    // titleBarStyle: 'hidden',
     backgroundColor: '#0f0f1a',
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
