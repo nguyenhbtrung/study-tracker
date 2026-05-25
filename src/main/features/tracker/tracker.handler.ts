@@ -4,6 +4,7 @@ import { Container } from '@ntrg/simple-di';
 
 export function registerTrackerIPC(container: Container) {
   const trackerService = container.resolve(TrackerService);
+
   ipcMain.handle('tracker:get-stats', () => {
     return trackerService.getStats();
   });

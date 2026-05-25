@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from 'react';
+
 import {
   ContributionGraph,
   ProductivityHeatmap,
@@ -6,64 +8,28 @@ import {
   calculateStatistics,
 } from '../../features/statistics';
 
-const mockData = [
-  {
-    date: '2026-05-01',
-    minutes: 120,
-    sessions: 2,
-    focusScore: 72,
-  },
-  {
-    date: '2026-05-02',
-    minutes: 240,
-    sessions: 4,
-    focusScore: 88,
-  },
-  {
-    date: '2026-05-03',
-    minutes: 60,
-    sessions: 1,
-    focusScore: 45,
-  },
-  {
-    date: '2026-05-04',
-    minutes: 240,
-    sessions: 4,
-    focusScore: 90,
-  },
-  {
-    date: '2026-05-10',
-    minutes: 60,
-    sessions: 2,
-    focusScore: 30,
-  },
-  {
-    date: '2026-05-11',
-    minutes: 180,
-    sessions: 3,
-    focusScore: 75,
-  },
-];
-
-const productivityData = [
-  { hour: 0, minutes: 0 },
-  { hour: 1, minutes: 0 },
-  { hour: 2, minutes: 0 },
-  { hour: 8, minutes: 20 },
-  { hour: 9, minutes: 45 },
-  { hour: 10, minutes: 60 },
-  { hour: 14, minutes: 80 },
-  { hour: 20, minutes: 180 },
-  { hour: 21, minutes: 220 },
-  { hour: 22, minutes: 140 },
-];
-
-function formatHours(minutes: number) {
-  return `${(minutes / 60).toFixed(1)}h`;
-}
+type StatisticsResponse = Awaited<
+  ReturnType<typeof window.api.tracker.getStatistics>
+>;
 
 export function StatisticsPage() {
-  const stats = calculateStatistics(mockData);
+  const [data, setData] = useState<StatisticsResponse | null>(null);
+
+  useEffect(() => {
+    window.api.tracker.getStatistics().then(setData);
+  }, []);
+
+  const summary = useMemo(() => {
+    if (!data) {
+      return null;
+    }
+
+    return calculateStatistics(data.contributionData);
+  }, [data]);
+
+  if (!data || !summary) {
+    return <div className="p-6 text-white/60">Loading statistics...</div>;
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -72,42 +38,53 @@ export function StatisticsPage() {
         className="
           grid
           grid-cols-1
-          md:grid-cols-2
+          sm:grid-cols-2
           xl:grid-cols-3
           gap-4
         "
       >
-        <StatisticsCard title="Today" value={formatHours(stats.todayMinutes)} />
+        <StatisticsCard
+          title="Today"
+          value={`${(summary.todayMinutes / 60).toFixed(1)}h`}
+        />
 
         <StatisticsCard
           title="This Week"
-          value={formatHours(stats.weekMinutes)}
+          value={`${(summary.weekMinutes / 60).toFixed(1)}h`}
         />
 
         <StatisticsCard
           title="This Month"
-          value={formatHours(stats.monthMinutes)}
+          value={`${(summary.monthMinutes / 60).toFixed(1)}h`}
         />
 
-        <StatisticsCard title="Total" value={formatHours(stats.totalMinutes)} />
+        <StatisticsCard
+          title="Total Study"
+          value={`${(summary.totalMinutes / 60).toFixed(1)}h`}
+        />
 
         <StatisticsCard
           title="Current Streak"
-          value={`${stats.currentStreak} days`}
-          subtitle="Keep going 🔥"
+          value={`${summary.currentStreak} days`}
         />
 
         <StatisticsCard
           title="Longest Streak"
-          value={`${stats.longestStreak} days`}
+          value={`${summary.longestStreak} days`}
         />
       </div>
 
-      <ContributionGraph data={mockData} />
+      {/* Trend */}
+      <StudyTrendChart data={data.trendData} />
 
-      <StudyTrendChart data={mockData} />
+      {/* Heatmap */}
+      <ProductivityHeatmap data={data.productivityData} />
 
-      <ProductivityHeatmap data={productivityData} />
+      {/* Contributions */}
+      <ContributionGraph
+        data={data.contributionData}
+        sessionsByDate={data.sessionsByDate}
+      />
     </div>
   );
 }

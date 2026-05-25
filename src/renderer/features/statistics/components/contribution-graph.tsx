@@ -11,6 +11,7 @@ import { useMemo, useState } from 'react';
 
 import { ContributionCell } from './contribution-cell';
 import { ContributionDayModal } from './contribution-day-modal';
+import { StudySession } from '../types';
 
 type ContributionData = {
   date: string;
@@ -19,35 +20,13 @@ type ContributionData = {
 
 type Props = {
   data: ContributionData[];
+
+  sessionsByDate: Record<string, StudySession[]>;
 };
 
 const WEEKDAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 
-const mockSessions = {
-  '2026-05-01': [
-    {
-      id: '1',
-      title: 'ReactJS',
-      startTime: '2026-05-01T08:00:00',
-      endTime: '2026-05-01T10:00:00',
-      durationMinutes: 120,
-      focusScore: 82,
-    },
-  ],
-
-  '2026-05-02': [
-    {
-      id: '2',
-      title: 'DSA',
-      startTime: '2026-05-02T20:00:00',
-      endTime: '2026-05-02T22:30:00',
-      durationMinutes: 150,
-      focusScore: 90,
-    },
-  ],
-};
-
-export function ContributionGraph({ data }: Props) {
+export function ContributionGraph({ data, sessionsByDate }: Props) {
   const currentYear = new Date().getFullYear();
 
   const [selectedYear, setSelectedYear] = useState(currentYear);
@@ -224,11 +203,7 @@ export function ContributionGraph({ data }: Props) {
       <ContributionDayModal
         open={selectedDate != null}
         date={selectedDate ?? ''}
-        sessions={
-          selectedDate
-            ? (mockSessions[selectedDate as keyof typeof mockSessions] ?? [])
-            : []
-        }
+        sessions={selectedDate ? (sessionsByDate[selectedDate] ?? []) : []}
         onClose={() => setSelectedDate(null)}
       />
     </div>

@@ -8,13 +8,18 @@ export class TrackerService {
   constructor(private readonly sessionRepo: SessionRepository) {}
 
   start() {
-    if (!startTime) startTime = Date.now();
+    if (!startTime) {
+      startTime = Date.now();
+    }
   }
 
   stop() {
-    if (!startTime) return;
+    if (!startTime) {
+      return;
+    }
 
     const end = Date.now();
+
     const duration = end - startTime;
 
     this.sessionRepo.create({
@@ -28,10 +33,13 @@ export class TrackerService {
 
   getStats() {
     const startOfDay = new Date();
+
     startOfDay.setHours(0, 0, 0, 0);
 
     const total = this.sessionRepo.getTotal();
+
     const today = this.sessionRepo.getToday(startOfDay.getTime());
+
     const current = startTime ? Date.now() - startTime : 0;
 
     return {
