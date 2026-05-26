@@ -8,6 +8,13 @@ import { TrackerService } from '../features/tracker/tracker.service';
 let container: Container;
 let trackerService: TrackerService;
 
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
+
+app.setAppUserModelId('com.squirrel.StudyTracker.StudyTracker');
+
 // console.log(app.getPath('userData'));
 
 app.whenReady().then(() => {

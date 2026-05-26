@@ -10,6 +10,10 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 
 import { mainConfig } from './webpack.main.config';
 import { rendererConfig } from './webpack.renderer.config';
+import { PublisherGithub } from '@electron-forge/publisher-github';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const config: ForgeConfig = {
   packagerConfig: {
@@ -17,10 +21,23 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({}),
+    new MakerSquirrel({
+      name: 'StudyTracker',
+    }),
     new MakerZIP({}, ['darwin']),
     new MakerRpm({}),
     new MakerDeb({}),
+  ],
+  publishers: [
+    new PublisherGithub({
+      repository: {
+        owner: 'nguyenhbtrung',
+        name: 'study-tracker',
+      },
+      prerelease: true,
+      draft: true,
+      generateReleaseNotes: true,
+    }),
   ],
   plugins: [
     new AutoUnpackNativesPlugin({}),
