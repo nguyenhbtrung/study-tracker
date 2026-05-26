@@ -34,7 +34,7 @@ const config: ForgeConfig = {
         owner: 'nguyenhbtrung',
         name: 'study-tracker',
       },
-      prerelease: true,
+      prerelease: false,
       draft: true,
       generateReleaseNotes: true,
     }),
