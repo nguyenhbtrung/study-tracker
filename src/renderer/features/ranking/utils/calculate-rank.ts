@@ -4,6 +4,8 @@ import { RANK_TIERS } from './rank-config';
 
 import type { StudySession } from '../../statistics';
 
+import { buildWeeklyMissions, calculateMissionXp } from './weekly-missions';
+
 export function calculateRank(sessions: StudySession[]) {
   /**
    * TOTALS
@@ -168,6 +170,13 @@ export function calculateRank(sessions: StudySession[]) {
   const afkPenalty = suspiciousSessions * 300;
 
   /**
+   * WEEKLY MISSIONS
+   */
+  const weeklyMissions = buildWeeklyMissions(sessions);
+
+  const missionXp = calculateMissionXp(weeklyMissions);
+
+  /**
    * TOTAL XP
    */
   const totalXp = Math.max(
@@ -178,7 +187,8 @@ export function calculateRank(sessions: StudySession[]) {
         streakXp +
         activityXp +
         consistencyBonus +
-        marathonBonus -
+        marathonBonus +
+        missionXp -
         lowFocusPenalty -
         spamPenalty -
         inactiveDaysPenalty -
@@ -233,6 +243,10 @@ export function calculateRank(sessions: StudySession[]) {
     nextRank,
 
     progress,
+
+    missionXp,
+
+    weeklyMissions,
 
     penalties: {
       lowFocusPenalty,
