@@ -8,7 +8,7 @@ import { TrackerService } from '../features/tracker/tracker.service';
 let container: Container;
 let trackerService: TrackerService;
 
-console.log(app.getPath('userData'));
+// console.log(app.getPath('userData'));
 
 app.whenReady().then(() => {
   createMainWindow();

@@ -8,7 +8,7 @@ export default function TitleBar() {
         className="flex-1 pl-3 text-sm opacity-80 select-none"
         style={{ WebkitAppRegion: 'drag' } as any}
       >
-        📚 Study Tracker
+        Study Tracker
       </div>
 
       {/* Controls */}
