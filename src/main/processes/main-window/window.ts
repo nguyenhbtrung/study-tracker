@@ -1,4 +1,5 @@
 import { BrowserWindow, ipcMain } from 'electron';
+import { IPC_CHANNELS } from '../../../shared/ipc';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
@@ -19,12 +20,12 @@ export function createMainWindow() {
 
   win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  ipcMain.on('window:minimize', () => win.minimize());
+  ipcMain.on(IPC_CHANNELS.WINDOW.MINIMIZE, () => win.minimize());
 
-  ipcMain.on('window:maximize', () => {
+  ipcMain.on(IPC_CHANNELS.WINDOW.MAXIMIZE, () => {
     if (win.isMaximized()) win.unmaximize();
     else win.maximize();
   });
 
-  ipcMain.on('window:close', () => win.close());
+  ipcMain.on(IPC_CHANNELS.WINDOW.CLOSE, () => win.close());
 }

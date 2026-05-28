@@ -1,21 +1,24 @@
 import { ipcRenderer } from 'electron';
 
-export const api = {
+import { IPC_CHANNELS, type ElectronAPI } from '../shared/ipc';
+
+export const api: ElectronAPI = {
   tracker: {
-    getStats: () => ipcRenderer.invoke('tracker:get-stats'),
+    getStats: () => ipcRenderer.invoke(IPC_CHANNELS.TRACKER.GET_STATS),
 
-    getStatistics: () => ipcRenderer.invoke('statistics:get-all'),
+    getStatistics: () =>
+      ipcRenderer.invoke(IPC_CHANNELS.TRACKER.GET_STATISTICS),
 
-    start: () => ipcRenderer.send('tracker:start'),
+    start: () => ipcRenderer.send(IPC_CHANNELS.TRACKER.START),
 
-    stop: () => ipcRenderer.send('tracker:stop'),
+    stop: () => ipcRenderer.send(IPC_CHANNELS.TRACKER.STOP),
   },
 
   window: {
-    minimize: () => ipcRenderer.send('window:minimize'),
+    minimize: () => ipcRenderer.send(IPC_CHANNELS.WINDOW.MINIMIZE),
 
-    maximize: () => ipcRenderer.send('window:maximize'),
+    maximize: () => ipcRenderer.send(IPC_CHANNELS.WINDOW.MAXIMIZE),
 
-    close: () => ipcRenderer.send('window:close'),
+    close: () => ipcRenderer.send(IPC_CHANNELS.WINDOW.CLOSE),
   },
 };

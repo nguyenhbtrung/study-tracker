@@ -1,19 +1,20 @@
 import { ipcMain } from 'electron';
 import { TrackerService } from './tracker.service';
 import { Container } from '@ntrg/simple-di';
+import { IPC_CHANNELS } from '../../../shared/ipc';
 
 export function registerTrackerIPC(container: Container) {
   const trackerService = container.resolve(TrackerService);
 
-  ipcMain.handle('tracker:get-stats', () => {
+  ipcMain.handle(IPC_CHANNELS.TRACKER.GET_STATS, () => {
     return trackerService.getStats();
   });
 
-  ipcMain.on('tracker:start', () => {
+  ipcMain.on(IPC_CHANNELS.TRACKER.START, () => {
     trackerService.start();
   });
 
-  ipcMain.on('tracker:stop', () => {
+  ipcMain.on(IPC_CHANNELS.TRACKER.STOP, () => {
     trackerService.stop();
   });
 }
