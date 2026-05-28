@@ -1,3 +1,4 @@
+import { StatisticsResponse } from '../../../shared/types/statistics.types';
 import { SessionRepository } from '../../entities/session/session.repository';
 import { Injectable } from '@ntrg/simple-di';
 
@@ -45,7 +46,7 @@ export class StatisticsService {
     }));
   }
 
-  getStatistics() {
+  getStatistics(): StatisticsResponse {
     const daily = this.sessionRepo.getDailyStatistics();
 
     const sessions = this.sessionRepo.getAllSessions();
@@ -100,6 +101,7 @@ export class StatisticsService {
           })),
         ]),
       ),
+      daily,
     };
   }
 }

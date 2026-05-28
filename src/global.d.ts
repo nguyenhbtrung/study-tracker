@@ -1,34 +1,15 @@
+import { StatisticsResponse } from './shared/types/statistics.types';
+import { StatsResponse } from './shared/types/tracker.types';
+
 export {};
 
 declare global {
   interface Window {
     api: {
       tracker: {
-        getStats(): Promise<{
-          today: number;
-          total: number;
-        }>;
+        getStats(): Promise<StatsResponse>;
 
-        getStatistics(): Promise<{
-          contributionData: {
-            date: string;
-            minutes: number;
-          }[];
-
-          trendData: {
-            date: string;
-            minutes: number;
-            sessions: number;
-            focusScore: number;
-          }[];
-
-          productivityData: {
-            hour: number;
-            minutes: number;
-          }[];
-
-          sessionsByDate: Record<string, any[]>;
-        }>;
+        getStatistics(): Promise<StatisticsResponse>;
 
         start(): void;
 

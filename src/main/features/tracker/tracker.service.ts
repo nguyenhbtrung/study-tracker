@@ -1,5 +1,6 @@
 import { Injectable } from '@ntrg/simple-di';
 import { SessionRepository } from '../../entities/session/session.repository';
+import { StatsResponse } from '../../../shared/types/tracker.types';
 
 let startTime: number | null = null;
 
@@ -31,7 +32,7 @@ export class TrackerService {
     startTime = null;
   }
 
-  getStats() {
+  getStats(): StatsResponse {
     const startOfDay = new Date();
 
     startOfDay.setHours(0, 0, 0, 0);
