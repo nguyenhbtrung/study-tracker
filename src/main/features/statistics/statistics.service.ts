@@ -47,7 +47,13 @@ export class StatisticsService {
   }
 
   getStatistics(): StatisticsResponse {
-    const daily = this.sessionRepo.getDailyStatistics();
+    const daily = this.sessionRepo.getDailyStatistics().map((item) => ({
+      ...item,
+      focusScore: Math.min(
+        100,
+        Math.round(item.minutes / Math.max(item.sessions, 1)),
+      ),
+    }));
 
     const sessions = this.sessionRepo.getAllSessions();
 
@@ -70,10 +76,7 @@ export class StatisticsService {
         date: item.date,
         minutes: item.minutes,
         sessions: item.sessions,
-        focusScore: Math.min(
-          100,
-          Math.round(item.minutes / Math.max(item.sessions, 1)),
-        ),
+        focusScore: item.focusScore,
       })),
 
       productivityData: Array.from({ length: 24 }).map((_, hour) => {
@@ -101,6 +104,7 @@ export class StatisticsService {
           })),
         ]),
       ),
+
       daily,
     };
   }

@@ -4,9 +4,14 @@ import { RANK_TIERS } from './rank-config';
 
 import type { StudySession } from '../../statistics';
 
+import type { DailyStatistics } from '../../../../shared/types/statistics.types';
+
 import { buildWeeklyMissions, calculateMissionXp } from './weekly-missions';
 
-export function calculateRank(sessions: StudySession[]) {
+export function calculateRank(
+  sessions: StudySession[],
+  daily: DailyStatistics[],
+) {
   /**
    * TOTALS
    */
@@ -20,21 +25,17 @@ export function calculateRank(sessions: StudySession[]) {
   const sessionsCount = sessions.length;
 
   /**
-   * FOCUS
+   * DAILY FOCUS
    */
-  const totalFocus = sessions.reduce(
-    (sum, session) => sum + (session.focusScore ?? 70),
-    0,
-  );
-
-  const averageFocus = sessions.length ? totalFocus / sessions.length : 0;
+  const averageFocus =
+    daily.length > 0
+      ? daily.reduce((sum, day) => sum + day.focusScore, 0) / daily.length
+      : 0;
 
   /**
    * STREAK
    */
-  const dates = [
-    ...new Set(sessions.map((s) => s.startTime.slice(0, 10))),
-  ].sort();
+  const dates = daily.map((d) => d.date).sort();
 
   let longestStreak = 0;
 
@@ -134,14 +135,9 @@ export function calculateRank(sessions: StudySession[]) {
   /**
    * Low focus penalty
    */
-  const lowFocusPenalty =
-    averageFocus < 40
-      ? 2500
-      : averageFocus < 55
-        ? 1200
-        : averageFocus < 70
-          ? 400
-          : 0;
+  const focusDeficit = Math.max(0, 75 - averageFocus);
+
+  const lowFocusPenalty = Math.round(focusDeficit * focusDeficit * 1.2);
 
   /**
    * Session spam penalty

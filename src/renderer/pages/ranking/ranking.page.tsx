@@ -31,8 +31,8 @@ export function RankingPage() {
   }, [data]);
 
   const ranking = useMemo(() => {
-    return calculateRank(sessions);
-  }, [sessions]);
+    return calculateRank(sessions, data?.daily ?? []);
+  }, [sessions, data]);
 
   if (!data) {
     return <div className="p-6 text-white/60">Loading ranking...</div>;

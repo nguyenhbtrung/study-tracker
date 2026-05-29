@@ -2,6 +2,7 @@ export type DailyStatistics = {
   date: string;
   minutes: number;
   sessions: number;
+  focusScore: number;
 };
 
 export type ContributionData = {

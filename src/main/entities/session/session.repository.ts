@@ -3,7 +3,6 @@ import { Injectable } from '@ntrg/simple-di';
 import { db } from '../../shared/db/client';
 
 import { Session } from './session.model';
-import { DailyStatistics } from '../../../shared/types/statistics.types';
 
 type TotalRow = {
   total: number | null;
@@ -11,6 +10,12 @@ type TotalRow = {
 
 type TodayRow = {
   today: number | null;
+};
+
+type DailyRow = {
+  date: string;
+  minutes: number;
+  sessions: number;
 };
 
 type HourlyRow = {
@@ -53,7 +58,7 @@ export class SessionRepository {
     return row?.today ?? 0;
   }
 
-  getDailyStatistics(): DailyStatistics[] {
+  getDailyStatistics(): DailyRow[] {
     return db
       .prepare(
         `
@@ -66,7 +71,7 @@ export class SessionRepository {
         ORDER BY date ASC
       `,
       )
-      .all() as DailyStatistics[];
+      .all() as DailyRow[];
   }
 
   getAllSessions() {
