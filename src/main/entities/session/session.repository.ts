@@ -1,6 +1,6 @@
 import { Injectable } from '@ntrg/simple-di';
 
-import { db } from '../../shared/db/client';
+import { db } from '@main/shared/db/client';
 
 import { Session } from './session.model';
 

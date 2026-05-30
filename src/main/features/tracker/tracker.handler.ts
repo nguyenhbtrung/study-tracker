@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron';
 import { TrackerService } from './tracker.service';
 import { Container } from '@ntrg/simple-di';
-import { IPC_CHANNELS } from '../../../shared/ipc';
+import { IPC_CHANNELS } from '@shared/ipc';
 
 export function registerTrackerIPC(container: Container) {
   const trackerService = container.resolve(TrackerService);

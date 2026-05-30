@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron';
 import { Container } from '@ntrg/simple-di';
 import { StatisticsService } from './statistics.service';
-import { IPC_CHANNELS } from '../../../shared/ipc';
+import { IPC_CHANNELS } from '@shared/ipc';
 
 export function registerStatisticsIPC(container: Container) {
   const statisticsService = container.resolve(StatisticsService);

@@ -20,6 +20,9 @@
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "paths": {
+      "@main/*": ["src/main/*"],
+      "@renderer/*": ["src/renderer/*"],
+      "@shared/*": ["src/shared/*"],
       "*": ["node_modules/*"]
     }
   },

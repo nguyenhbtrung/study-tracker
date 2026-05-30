@@ -1,6 +1,6 @@
 import { Injectable } from '@ntrg/simple-di';
-import { SessionRepository } from '../../entities/session/session.repository';
-import { StatsResponse } from '../../../shared/types/tracker.types';
+import { SessionRepository } from '@main/entities/session/session.repository';
+import { StatsResponse } from '@shared/types/tracker.types';
 
 let startTime: number | null = null;
 

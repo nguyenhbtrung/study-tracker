@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StatsResponse } from '../../../shared/types/tracker.types';
+import { StatsResponse } from '@shared/types/tracker.types';
 
 export function useTracker() {
   const [stats, setStats] = useState<StatsResponse>({ today: 0, total: 0 });

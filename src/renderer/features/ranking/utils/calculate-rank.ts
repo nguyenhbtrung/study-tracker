@@ -4,7 +4,7 @@ import { RANK_TIERS } from './rank-config';
 
 import type { StudySession } from '../../statistics';
 
-import type { DailyStatistics } from '../../../../shared/types/statistics.types';
+import type { DailyStatistics } from '@shared/types/statistics.types';
 
 import { buildWeeklyMissions, calculateMissionXp } from './weekly-missions';
 

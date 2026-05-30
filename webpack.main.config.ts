@@ -1,7 +1,9 @@
+/// <reference types="node" />
 import type { Configuration } from 'webpack';
 
 import { rules } from './webpack.rules';
 import { plugins } from './webpack.plugins';
+import path from 'path';
 
 export const mainConfig: Configuration = {
   /**
@@ -15,6 +17,11 @@ export const mainConfig: Configuration = {
   },
   plugins,
   resolve: {
+    alias: {
+      '@main': path.resolve(__dirname, 'src/main'),
+      '@renderer': path.resolve(__dirname, 'src/renderer'),
+      '@shared': path.resolve(__dirname, 'src/shared'),
+    },
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
 };

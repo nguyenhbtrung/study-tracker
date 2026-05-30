@@ -1,5 +1,5 @@
-import { StatisticsResponse } from '../../../shared/types/statistics.types';
-import { SessionRepository } from '../../entities/session/session.repository';
+import { StatisticsResponse } from '@shared/types/statistics.types';
+import { SessionRepository } from '@main/entities/session/session.repository';
 import { Injectable } from '@ntrg/simple-di';
 
 @Injectable()
