@@ -135,7 +135,7 @@ export function calculateRank(
   /**
    * Low focus penalty
    */
-  const focusDeficit = Math.max(0, 75 - averageFocus);
+  const focusDeficit = Math.max(0, 30 - averageFocus);
 
   const lowFocusPenalty = Math.round(focusDeficit * focusDeficit * 1.2);
 
@@ -182,9 +182,9 @@ export function calculateRank(
         focusXp +
         streakXp +
         activityXp +
+        missionXp +
         consistencyBonus +
-        marathonBonus +
-        missionXp -
+        marathonBonus -
         lowFocusPenalty -
         spamPenalty -
         inactiveDaysPenalty -
