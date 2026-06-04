@@ -12,6 +12,10 @@ export const api: ElectronAPI = {
     start: () => ipcRenderer.send(IPC_CHANNELS.TRACKER.START),
 
     stop: () => ipcRenderer.send(IPC_CHANNELS.TRACKER.STOP),
+
+    pause: () => ipcRenderer.send(IPC_CHANNELS.TRACKER.PAUSE),
+
+    resume: () => ipcRenderer.send(IPC_CHANNELS.TRACKER.RESUME),
   },
 
   window: {

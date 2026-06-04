@@ -17,4 +17,12 @@ export function registerTrackerIPC(container: Container) {
   ipcMain.on(IPC_CHANNELS.TRACKER.STOP, () => {
     trackerService.stop();
   });
+
+  ipcMain.on(IPC_CHANNELS.TRACKER.PAUSE, () => {
+    trackerService.pause();
+  });
+
+  ipcMain.on(IPC_CHANNELS.TRACKER.RESUME, () => {
+    trackerService.resume();
+  });
 }

@@ -2,34 +2,69 @@ import { Injectable } from '@ntrg/simple-di';
 import { SessionRepository } from '@main/entities/session/session.repository';
 import { StatsResponse } from '@shared/types/tracker.types';
 
-let startTime: number | null = null;
-
 @Injectable()
 export class TrackerService {
+  private startTime: number | null = null;
+  private pausedAt: number | null = null;
+  private accumulatedPauseMs = 0;
+
   constructor(private readonly sessionRepo: SessionRepository) {}
 
   start() {
-    if (!startTime) {
-      startTime = Date.now();
-    }
-  }
-
-  stop() {
-    if (!startTime) {
+    if (this.startTime) {
       return;
     }
 
-    const end = Date.now();
+    this.startTime = Date.now();
 
-    const duration = end - startTime;
+    this.pausedAt = null;
+    this.accumulatedPauseMs = 0;
+  }
+
+  stop() {
+    if (!this.startTime) {
+      return;
+    }
+
+    const end = this.pausedAt ?? Date.now();
+
+    const duration = end - this.startTime - this.accumulatedPauseMs;
 
     this.sessionRepo.create({
-      start_time: startTime,
+      start_time: this.startTime,
       end_time: end,
       duration,
     });
 
-    startTime = null;
+    this.startTime = null;
+    this.pausedAt = null;
+    this.accumulatedPauseMs = 0;
+  }
+
+  pause() {
+    if (!this.startTime) {
+      return;
+    }
+
+    if (this.pausedAt) {
+      return;
+    }
+
+    this.pausedAt = Date.now();
+  }
+
+  resume() {
+    if (!this.startTime) {
+      return;
+    }
+
+    if (!this.pausedAt) {
+      return;
+    }
+
+    this.accumulatedPauseMs += Date.now() - this.pausedAt;
+
+    this.pausedAt = null;
   }
 
   getStats(): StatsResponse {
@@ -41,11 +76,22 @@ export class TrackerService {
 
     const today = this.sessionRepo.getToday(startOfDay.getTime());
 
-    const current = startTime ? Date.now() - startTime : 0;
+    let current = 0;
+
+    if (this.startTime) {
+      const now = this.pausedAt ?? Date.now();
+
+      current = now - this.startTime - this.accumulatedPauseMs;
+    }
 
     return {
+      currentSession: current,
       today: today + current,
       total: total + current,
+
+      isTracking: !!this.startTime,
+
+      isPaused: !!this.pausedAt,
     };
   }
 
@@ -55,5 +101,13 @@ export class TrackerService {
 
   stopTracking() {
     this.stop();
+  }
+
+  pauseTracking() {
+    this.pause();
+  }
+
+  resumeTracking() {
+    this.resume();
   }
 }

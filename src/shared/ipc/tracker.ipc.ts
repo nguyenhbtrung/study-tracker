@@ -9,4 +9,8 @@ export interface TrackerIPC {
   start(): void;
 
   stop(): void;
+
+  pause(): void;
+
+  resume(): void;
 }

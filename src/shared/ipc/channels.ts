@@ -4,6 +4,8 @@ export const IPC_CHANNELS = {
     GET_STATISTICS: 'statistics:get-all',
     START: 'tracker:start',
     STOP: 'tracker:stop',
+    PAUSE: 'tracker:pause',
+    RESUME: 'tracker:resume',
   },
 
   WINDOW: {
